@@ -1,5 +1,6 @@
 import { type IngredientType, type RecipeType, useRecipeStore } from "@/store/recipes"
-
+import { Trash, Archive } from "lucide-react"
+import { Button } from "../ui/button"
 import { useEffect, useState, type JSX } from "react"
 import { DialogContent, DialogDescription, DialogTitle } from "../ui/dialog"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../ui/table"
@@ -39,6 +40,8 @@ function IngredientList({ ingredients }: IngredientListProps): JSX.Element {
 }
 
 export default function RecipeInfo({ id }: RecipeInfoProps) {
+    const deleteRecipe = useRecipeStore(state => state.deleteRecipe)
+    const archiveRecipe = useRecipeStore(state => state.archiveRecipe)
 
     const [recipe, setRecipe] = useState<RecipeType | undefined>(undefined)
 
@@ -61,6 +64,28 @@ export default function RecipeInfo({ id }: RecipeInfoProps) {
             {recipe?.description}
         </DialogDescription>
         <IngredientList ingredients={recipe?.ingredients} />
+        <div className="flex justify-end gap-2 mt-4">
+            <Button
+                variant="outline"
+                onClick={() => {
+                    archiveRecipe(id)
+                    // The dialog will close automatically because the item disappears from the filtered list in parent
+                }}
+            >
+                <Archive className="w-4 h-4 mr-2" />
+                Archive
+            </Button>
+
+            <Button
+                variant="destructive"
+                onClick={() => {
+                    deleteRecipe(id)
+                }}
+            >
+                <Trash className="w-4 h-4 mr-2" />
+                Delete
+            </Button>
+        </div>
     </DialogContent>
 
 }
