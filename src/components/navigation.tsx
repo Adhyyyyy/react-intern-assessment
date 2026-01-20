@@ -10,6 +10,10 @@ const pageLinks = [
         path: "/create",
         label: "create",
     },
+    {
+        path: "/archive",
+        label: "archives",
+    },
 ]
 
 export function Navigation() {
@@ -17,8 +21,9 @@ export function Navigation() {
     const navigate = useNavigate()
 
     return <nav className="flex gap-3 justify-center">
+
         {pageLinks?.map(link => (
-            <Button  variant='outline' onClick={() => navigate(link.path)}>
+            <Button key={link.path} variant='outline' onClick={() => navigate(link.path)}>
                 {link.label}
             </Button>
         ))}

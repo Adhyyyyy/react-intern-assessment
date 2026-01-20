@@ -21,7 +21,7 @@ import {
 import { Input } from "../ui/input"
 
 const recipeSchema = z.object({
-    name: z.string().min(1, "Recipe name is required"),
+    title: z.string().min(1, "Recipe name is required"),
     description: z.string().min(1, "Description is required"),
     ingredients: z.array(z.object({
         name: z.string().min(1, "Ingredient name is required"),
@@ -40,7 +40,7 @@ export default function CreateForm() {
     const form = useForm<RecipeFormValues>({
         resolver: zodResolver(recipeSchema),
         defaultValues: {
-            name: "",
+            title: "",
             description: "",
             ingredients: []
         },
@@ -58,6 +58,7 @@ export default function CreateForm() {
             isArchived: false
         }
         addRecipe(newRecipe)
+        alert("Recipe created successfully!")
         navigate("/")
     }
 
@@ -69,7 +70,7 @@ export default function CreateForm() {
             >
                 <FormField
                     control={form.control}
-                    name="name"
+                    name="title"
                     render={({ field }) => (
                         <FormItem>
                             <FormLabel>Recipe Name</FormLabel>

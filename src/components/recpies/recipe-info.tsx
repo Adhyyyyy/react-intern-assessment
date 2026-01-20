@@ -42,6 +42,7 @@ function IngredientList({ ingredients }: IngredientListProps): JSX.Element {
 export default function RecipeInfo({ id }: RecipeInfoProps) {
     const deleteRecipe = useRecipeStore(state => state.deleteRecipe)
     const archiveRecipe = useRecipeStore(state => state.archiveRecipe)
+    const unarchiveRecipe = useRecipeStore(state => state.unarchiveRecipe)
 
     const [recipe, setRecipe] = useState<RecipeType | undefined>(undefined)
 
@@ -65,21 +66,37 @@ export default function RecipeInfo({ id }: RecipeInfoProps) {
         </DialogDescription>
         <IngredientList ingredients={recipe?.ingredients} />
         <div className="flex justify-end gap-2 mt-4">
-            <Button
-                variant="outline"
-                onClick={() => {
-                    archiveRecipe(id)
-                    // The dialog will close automatically because the item disappears from the filtered list in parent
-                }}
-            >
-                <Archive className="w-4 h-4 mr-2" />
-                Archive
-            </Button>
+            {recipe?.isArchived ? (
+                <Button
+                    variant="outline"
+                    onClick={() => {
+                        unarchiveRecipe(id)
+                        alert("Recipe unarchived successfully!")
+                    }}
+                >
+                    <Archive className="w-4 h-4 mr-2" />
+                    Unarchive
+                </Button>
+            ) : (
+                <Button
+                    variant="outline"
+                    onClick={() => {
+                        archiveRecipe(id)
+                        alert("Recipe archived successfully!")
+                    }}
+                >
+                    <Archive className="w-4 h-4 mr-2" />
+                    Archive
+                </Button>
+            )}
 
             <Button
                 variant="destructive"
                 onClick={() => {
-                    deleteRecipe(id)
+                    const isConfirmed = window.confirm("Are you sure you want to delete this recipe? This action cannot be undone.")
+                    if (isConfirmed) {
+                        deleteRecipe(id)
+                    }
                 }}
             >
                 <Trash className="w-4 h-4 mr-2" />
