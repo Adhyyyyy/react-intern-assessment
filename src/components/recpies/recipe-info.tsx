@@ -96,6 +96,7 @@ export default function RecipeInfo({ id }: RecipeInfoProps) {
                     const isConfirmed = window.confirm("Are you sure you want to delete this recipe? This action cannot be undone.")
                     if (isConfirmed) {
                         deleteRecipe(id)
+                        alert("Recipe deleted successfully!")
                     }
                 }}
             >
