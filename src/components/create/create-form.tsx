@@ -98,14 +98,13 @@ export default function CreateForm() {
 
                 <div className="space-y-4">
                     <div className="flex items-center justify-between">
-                        <FormLabel>Ingredients</FormLabel>
                         <Button
                             type="button" // Important: prevents submitting the form
                             variant="outline"
                             size="sm"
                             onClick={() => append({ name: "", quantity: 1, unit: "nos" })}
                         >
-                            <Plus className="w-4 h-4 mr-2" /> Add Ingredient
+                            <Plus className="w-4 h-4 mr-2" />Add Ingredient
                         </Button>
                     </div>
 
